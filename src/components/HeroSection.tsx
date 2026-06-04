@@ -38,7 +38,7 @@ export default function HeroSection({ onClickCta }: Props) {
         {/* 画像側 */}
         <div className="flex-1 w-full order-1 sm:order-2">
           <Image
-            src="/images/empsales_scene_1_female.png"
+            src="/images/shokugyo-taiken-topimage.png"
             alt="お仕事体験ゲームのシーン"
             width={640}
             height={360}
