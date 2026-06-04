@@ -11,6 +11,7 @@ import ResultScreen from "@/components/ResultScreen";
 import { getVisibleJobs } from "@/data/jobs";
 import type { JobRpg, Option } from "@/data/jobs/types";
 import type { PlayerAnswer } from "@/lib/scoring";
+import type { Gender } from "@/components/JobModal";
 import {
   calculateMaxScore,
   calculateScorePercent,
@@ -26,6 +27,7 @@ export default function Home() {
   const [selectedJob, setSelectedJob] = useState<JobRpg | null>(null);
   const [modalJob, setModalJob] = useState<JobRpg | null>(null);
   const [playerName, setPlayerName] = useState("プレイヤー");
+  const [gender, setGender] = useState<Gender>("male");
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
@@ -45,12 +47,13 @@ export default function Home() {
 
   const handleModalClose = () => setModalJob(null);
 
-  const handleGameStart = async (name: string) => {
+  const handleGameStart = async (name: string, selectedGender: Gender) => {
     if (!modalJob) return;
     const job = modalJob;
     setModalJob(null);
     setSelectedJob(job);
     setPlayerName(name);
+    setGender(selectedGender);
     setCurrentIndex(0);
     setAnswers([]);
 
@@ -235,6 +238,7 @@ export default function Home() {
       <GameLayout
         job={selectedJob}
         playerName={playerName}
+        gender={gender}
         currentQuestion={currentQuestion}
         currentIndex={currentIndex}
         gamePhase={screen === "question" ? "question" : "feedback"}

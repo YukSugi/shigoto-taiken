@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import type { JobRpg } from "@/data/jobs/types";
 import type { PlayerAnswer } from "@/lib/scoring";
 import {
@@ -46,6 +47,14 @@ export default function ResultScreen({
       ? "text-orange-500"
       : "text-red-500";
 
+  const finalImgIndex =
+    scorePercent >= 85 ? 5
+    : scorePercent >= 70 ? 4
+    : scorePercent >= 55 ? 3
+    : scorePercent >= 40 ? 2
+    : 1;
+  const finalImg = `/images/empsales_final_fb_${finalImgIndex}.png`;
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-2xl mx-auto px-4 py-10">
@@ -54,6 +63,18 @@ export default function ResultScreen({
           <p className="text-xl font-bold text-gray-800 mb-4">
             {playerName}さんの{job.displayName}スコア
           </p>
+
+          {/* 最終評価画像 */}
+          <div className="mb-4">
+            <Image
+              src={finalImg}
+              alt={`result ${finalImgIndex}`}
+              width={640}
+              height={360}
+              className="w-full rounded-2xl object-cover"
+            />
+          </div>
+
           <div
             className={`text-7xl font-bold mb-2 ${scoreColor} tabular-nums`}
           >

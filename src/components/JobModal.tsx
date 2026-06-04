@@ -12,19 +12,23 @@ const iconMap: Record<string, string> = {
   heart: "🤝",
 };
 
+export type Gender = "male" | "female";
+
 type Props = {
   job: JobRpg | null;
   onClose: () => void;
-  onStart: (playerName: string) => void;
+  onStart: (playerName: string, gender: Gender) => void;
 };
 
 export default function JobModal({ job, onClose, onStart }: Props) {
   const [playerName, setPlayerName] = useState("");
+  const [gender, setGender] = useState<Gender>("male");
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (job) {
       setPlayerName("");
+      setGender("male");
       setTimeout(() => inputRef.current?.focus(), 100);
     }
   }, [job]);
@@ -32,7 +36,7 @@ export default function JobModal({ job, onClose, onStart }: Props) {
   if (!job) return null;
 
   const handleStart = () => {
-    onStart(playerName.trim() || "プレイヤー");
+    onStart(playerName.trim() || "プレイヤー", gender);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -78,6 +82,36 @@ export default function JobModal({ job, onClose, onStart }: Props) {
         <div className="flex gap-4 text-sm text-gray-500 mb-5">
           <span>📝 {job.questions.length}問</span>
           <span>⏱ 目安{job.estimatedMinutes}分</span>
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            主人公の性別
+          </label>
+          <div className="flex gap-3">
+            <button
+              type="button"
+              onClick={() => setGender("male")}
+              className={`flex-1 py-3 rounded-xl border-2 font-semibold text-sm transition-colors ${
+                gender === "male"
+                  ? "border-indigo-500 bg-indigo-50 text-indigo-700"
+                  : "border-gray-200 text-gray-500 hover:border-gray-300"
+              }`}
+            >
+              👨 男性
+            </button>
+            <button
+              type="button"
+              onClick={() => setGender("female")}
+              className={`flex-1 py-3 rounded-xl border-2 font-semibold text-sm transition-colors ${
+                gender === "female"
+                  ? "border-pink-500 bg-pink-50 text-pink-700"
+                  : "border-gray-200 text-gray-500 hover:border-gray-300"
+              }`}
+            >
+              👩 女性
+            </button>
+          </div>
         </div>
 
         <div className="mb-5">

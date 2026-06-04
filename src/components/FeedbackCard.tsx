@@ -1,11 +1,17 @@
 "use client";
 
+import Image from "next/image";
 import type { FeedbackType, Option } from "@/data/jobs/types";
+import type { Gender } from "./JobModal";
+
+// feedback_normal_maleが未作成のためfemaleにfallback
+const MISSING_MALE_FEEDBACKS: FeedbackType[] = ["normal"];
 
 type Props = {
   selectedOption: Option;
   currentIndex: number;
   totalQuestions: number;
+  gender: Gender;
   onNext: () => void;
 };
 
@@ -37,13 +43,32 @@ export default function FeedbackCard({
   selectedOption,
   currentIndex,
   totalQuestions,
+  gender,
   onNext,
 }: Props) {
   const config = feedbackConfig[selectedOption.feedbackType];
   const isLast = currentIndex >= totalQuestions;
 
+  const feedbackType = selectedOption.feedbackType;
+  const effectiveGender =
+    gender === "male" && MISSING_MALE_FEEDBACKS.includes(feedbackType)
+      ? "female"
+      : gender;
+  const feedbackImg = `/images/feedback_${feedbackType}_${effectiveGender}.png`;
+
   return (
     <div className="max-w-2xl mx-auto w-full px-4 py-6 animate-fade-in">
+      {/* フィードバック画像 */}
+      <div className="mb-4">
+        <Image
+          src={feedbackImg}
+          alt={`feedback ${feedbackType}`}
+          width={640}
+          height={360}
+          className="w-full rounded-2xl object-cover"
+        />
+      </div>
+
       <div className={`rounded-2xl border-2 p-5 mb-5 ${config.bgColor}`}>
         <div className="flex items-center gap-2 mb-3">
           <span

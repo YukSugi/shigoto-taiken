@@ -20,7 +20,7 @@ export default function JobTileGrid({ jobs, onSelectJob }: Props) {
           <br />
           それぞれの仕事で、実際にありそうな場面を4択で体験できます。
         </p>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {jobs.map((job) => (
             <JobTile key={job.id} job={job} onClick={onSelectJob} />
           ))}

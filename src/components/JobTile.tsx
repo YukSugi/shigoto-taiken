@@ -24,7 +24,7 @@ export default function JobTile({ job, onClick }: Props) {
       onClick={() => onClick(job)}
       disabled={!isAvailable}
       className={`
-        relative flex flex-col items-center text-center p-6 rounded-2xl border-2 transition-all
+        relative flex flex-col p-3 sm:p-6 rounded-2xl border-2 transition-all text-left
         ${
           isAvailable
             ? "border-indigo-100 bg-white hover:border-indigo-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
@@ -32,16 +32,23 @@ export default function JobTile({ job, onClick }: Props) {
         }
       `}
     >
-      <span className="text-4xl mb-3">{iconMap[job.icon] ?? "🏢"}</span>
-      <p className="font-bold text-gray-900 text-base mb-1">{job.displayName}</p>
-      <p className="text-gray-500 text-xs leading-snug">{job.subtitle}</p>
+      {/* 1行目: アイコン + 職種名 を横並び */}
+      <div className="flex items-center gap-2 mb-1.5">
+        <span className="text-2xl sm:text-3xl shrink-0">
+          {iconMap[job.icon] ?? "🏢"}
+        </span>
+        <p className="font-bold text-gray-900 text-sm sm:text-base leading-tight">
+          {job.displayName}
+        </p>
+      </div>
+      {/* 2行目: バッジ */}
       {job.status === "comingSoon" && (
-        <span className="mt-3 text-xs bg-gray-100 text-gray-400 px-2 py-0.5 rounded-full font-medium">
+        <span className="text-xs bg-gray-100 text-gray-400 px-2 py-0.5 rounded-full font-medium self-start">
           準備中
         </span>
       )}
       {job.status === "published" && (
-        <span className="mt-3 text-xs bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded-full font-medium">
+        <span className="text-xs bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded-full font-medium self-start">
           体験できます
         </span>
       )}

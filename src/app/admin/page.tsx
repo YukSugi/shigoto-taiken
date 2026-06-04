@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import AdminFilters from "@/components/admin/AdminFilters";
 import SummaryCards from "@/components/admin/SummaryCards";
 import ScoreDistributionTable from "@/components/admin/ScoreDistributionTable";
@@ -11,6 +12,7 @@ import QuestionDetailPanel from "@/components/admin/QuestionDetailPanel";
 type Range = "7d" | "30d" | "all";
 
 export default function AdminPage() {
+  const router = useRouter();
   const [range, setRange] = useState<Range>("30d");
   const [jobId, setJobId] = useState("");
   const [version, setVersion] = useState("");
@@ -20,6 +22,11 @@ export default function AdminPage() {
     jobId: string;
     questionId: string;
   } | null>(null);
+
+  const handleLogout = async () => {
+    await fetch("/api/admin/logout", { method: "POST" });
+    router.push("/admin/login");
+  };
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -50,12 +57,20 @@ export default function AdminPage() {
           <span className="text-base font-bold text-indigo-700">
             お仕事体験.com — 管理画面
           </span>
-          <button
-            onClick={fetchData}
-            className="text-xs text-gray-500 hover:text-gray-700 border border-gray-200 rounded-lg px-3 py-1.5"
-          >
-            更新
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={fetchData}
+              className="text-xs text-gray-500 hover:text-gray-700 border border-gray-200 rounded-lg px-3 py-1.5"
+            >
+              更新
+            </button>
+            <button
+              onClick={handleLogout}
+              className="text-xs text-gray-400 hover:text-red-600 border border-gray-200 rounded-lg px-3 py-1.5 transition-colors"
+            >
+              ログアウト
+            </button>
+          </div>
         </div>
       </header>
 

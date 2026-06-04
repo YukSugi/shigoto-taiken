@@ -1,7 +1,7 @@
 "use client";
 
 import type { JobRpg, Option, Question } from "@/data/jobs/types";
-import type { PlayerAnswer } from "@/lib/scoring";
+import type { Gender } from "./JobModal";
 import ProgressIndicator from "./ProgressIndicator";
 import QuestionCard from "./QuestionCard";
 import FeedbackCard from "./FeedbackCard";
@@ -11,6 +11,7 @@ type GamePhase = "question" | "feedback";
 type Props = {
   job: JobRpg;
   playerName: string;
+  gender: Gender;
   currentQuestion: Question;
   currentIndex: number;
   gamePhase: GamePhase;
@@ -22,6 +23,7 @@ type Props = {
 export default function GameLayout({
   job,
   playerName,
+  gender,
   currentQuestion,
   currentIndex,
   gamePhase,
@@ -43,7 +45,9 @@ export default function GameLayout({
         {gamePhase === "question" && (
           <QuestionCard
             question={currentQuestion}
+            questionIndex={currentIndex + 1}
             playerName={playerName}
+            gender={gender}
             onSelect={onSelectOption}
             disabled={false}
           />
@@ -53,6 +57,7 @@ export default function GameLayout({
             selectedOption={selectedOption}
             currentIndex={currentIndex + 1}
             totalQuestions={job.questions.length}
+            gender={gender}
             onNext={onNextQuestion}
           />
         )}
