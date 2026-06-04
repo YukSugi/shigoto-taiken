@@ -269,7 +269,7 @@ export default function Home() {
       <div ref={jobTilesSectionRef}>
         <JobTileGrid jobs={visibleJobs} onSelectJob={handleSelectJob} />
       </div>
-      <footer className="bg-gray-50 border-t border-gray-100 py-8 px-4">
+      <footer className="bg-amber-50 border-t border-amber-100 py-8 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-xs text-gray-400">
             このサイトでは、サービス改善のために、選択肢の選択状況や解答時間などの匿名データを記録する場合があります。
