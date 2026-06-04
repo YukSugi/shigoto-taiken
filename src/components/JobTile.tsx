@@ -18,8 +18,8 @@ const colorTheme: Record<string, {
 }> = {
   briefcase: {
     // 💼 カバンの茶色
-    button: "border-amber-200 border-b-amber-500 hover:bg-amber-50 hover:border-amber-300 hover:border-b-amber-600",
-    badge: "bg-amber-100 text-amber-800",
+    button: "border-stone-300 border-b-stone-500 hover:bg-stone-50 hover:border-stone-400 hover:border-b-stone-600",
+    badge: "bg-stone-100 text-stone-700",
   },
   megaphone: {
     // 📣 メガホンのオレンジ
