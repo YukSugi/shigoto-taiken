@@ -5,7 +5,7 @@ export type PlayerAnswer = {
   questionIndex: number;
   selectedOptionId: "A" | "B" | "C" | "D";
   score: number;
-  feedbackType: "good" | "normal" | "bad";
+  feedbackType: "good" | "strong_normal" | "normal" | "risky_bad" | "bad";
   questionStartedAt: string;
   answeredAt: string;
   answerTimeMs: number;

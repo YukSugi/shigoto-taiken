@@ -1,6 +1,6 @@
 import type { JobRpg } from "./types";
 import { b2bSalesExisting } from "./b2b-sales-existing";
-import { productMarketing } from "./product-marketing";
+import { marketer } from "./marketer";
 import { productManager } from "./product-manager";
 import { engineer } from "./engineer";
 import { corporatePlanning } from "./corporate-planning";
@@ -8,7 +8,7 @@ import { customerSuccess } from "./customer-success";
 
 export const jobs: JobRpg[] = [
   b2bSalesExisting,
-  productMarketing,
+  marketer,
   productManager,
   engineer,
   corporatePlanning,

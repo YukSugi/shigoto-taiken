@@ -73,9 +73,9 @@ export default function JobModal({ job, onClose, onStart }: Props) {
           {job.description}
         </p>
 
-        {job.serviceSetting && (
+        {job.scenarioDescription && (
           <p className="text-sm text-gray-600 leading-relaxed mb-4">
-            今回の体験では、業務改善クラウド「{job.serviceSetting.serviceName}」を使っている既存顧客に対して、利用率低下の原因を探り、解約リスクを下げる営業の流れを体験します。
+            {job.scenarioDescription}
           </p>
         )}
 

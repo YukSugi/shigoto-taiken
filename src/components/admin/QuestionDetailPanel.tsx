@@ -50,13 +50,15 @@ export default function QuestionDetailPanel({
         <div className="space-y-3">
           {filtered.map((s) => {
             const option = question.options.find((o) => o.id === s.optionId);
-            const feedbackColors = {
+            const feedbackColors: Record<string, string> = {
               good: "bg-green-100 text-green-700",
+              strong_normal: "bg-blue-100 text-blue-700",
               normal: "bg-yellow-100 text-yellow-700",
+              risky_bad: "bg-orange-100 text-orange-700",
               bad: "bg-red-100 text-red-600",
             };
             const colorClass = option
-              ? feedbackColors[option.feedbackType]
+              ? (feedbackColors[option.feedbackType] ?? "bg-gray-100 text-gray-500")
               : "bg-gray-100 text-gray-500";
 
             return (

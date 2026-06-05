@@ -50,6 +50,7 @@ export default function GameLayout({
             gender={gender}
             onSelect={onSelectOption}
             disabled={false}
+            sceneImagePrefix={job.sceneImagePrefix}
           />
         )}
         {gamePhase === "feedback" && selectedOption && (

@@ -1,5 +1,5 @@
 export type JobStatus = "published" | "comingSoon" | "hidden";
-export type FeedbackType = "good" | "normal" | "bad";
+export type FeedbackType = "good" | "strong_normal" | "normal" | "risky_bad" | "bad";
 export type Phase = "起" | "承" | "転" | "結";
 export type OptionId = "A" | "B" | "C" | "D";
 
@@ -18,7 +18,9 @@ export type ScoringRule = {
   maxScorePerQuestion: number;
   scoreMap: {
     good: number;
+    strong_normal?: number;
     normal: number;
+    risky_bad?: number;
     bad: number;
   };
   showScoreDuringGame: boolean;
@@ -27,7 +29,7 @@ export type ScoringRule = {
 export type Option = {
   id: OptionId;
   text: string;
-  score: 0 | 5 | 10;
+  score: number;
   feedbackType: FeedbackType;
   feedback: string;
   scoreDetails?: Record<string, number>;
@@ -70,4 +72,6 @@ export type JobRpg = {
   questions: Question[];
   resultMessages: ResultMessage[];
   nextJobSuggestions?: NextJobSuggestion[];
+  sceneImagePrefix?: string;
+  scenarioDescription?: string;
 };

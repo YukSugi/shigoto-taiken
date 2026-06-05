@@ -25,11 +25,23 @@ const feedbackConfig: Record<
     textColor: "text-green-700",
     icon: "✓",
   },
+  strong_normal: {
+    label: "かなり良い判断です",
+    bgColor: "bg-blue-50 border-blue-200",
+    textColor: "text-blue-700",
+    icon: "◎",
+  },
   normal: {
     label: "まずまずの判断です",
     bgColor: "bg-yellow-50 border-yellow-200",
     textColor: "text-yellow-700",
     icon: "△",
+  },
+  risky_bad: {
+    label: "危険な判断です",
+    bgColor: "bg-orange-50 border-orange-200",
+    textColor: "text-orange-700",
+    icon: "⚠",
   },
   bad: {
     label: "注意が必要です",

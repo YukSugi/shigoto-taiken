@@ -3,6 +3,8 @@ import type { JobRpg } from "./types";
 export const b2bSalesExisting: JobRpg = {
   id: "b2b-sales-existing",
   version: "1.0.0",
+  sceneImagePrefix: "empsales",
+  scenarioDescription: "今回の体験では、業務改善クラウド「FlowBase」を使っている既存顧客（A食品）に対して、利用率低下の原因を探り、解約リスクを下げる営業の流れを体験します。",
   displayName: "法人営業",
   subtitle: "既存顧客を担当するアカウント営業編",
   description:

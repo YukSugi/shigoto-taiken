@@ -17,6 +17,7 @@ type Props = {
   gender: Gender;
   onSelect: (option: Option) => void;
   disabled: boolean;
+  sceneImagePrefix?: string;
 };
 
 export default function QuestionCard({
@@ -26,12 +27,15 @@ export default function QuestionCard({
   gender,
   onSelect,
   disabled,
+  sceneImagePrefix,
 }: Props) {
   const effectiveGender =
     gender === "male" && MISSING_MALE_SCENES.includes(questionIndex)
       ? "female"
       : gender;
-  const sceneImg = `/images/empsales_scene_${questionIndex}_${effectiveGender}.png`;
+  const sceneImg = sceneImagePrefix
+    ? `/images/${sceneImagePrefix}_scene_${questionIndex}_${effectiveGender}.png`
+    : null;
 
   // 問題が変わるたびに1回だけシャッフル
   const shuffledOptions = useMemo(
@@ -44,16 +48,18 @@ export default function QuestionCard({
       <h2 className="text-lg font-bold text-gray-900 mb-4">{question.title}</h2>
 
       {/* シーン画像 */}
-      <div className="mb-4">
-        <Image
-          src={sceneImg}
-          alt={`scene ${questionIndex}`}
-          width={640}
-          height={360}
-          className="w-full rounded-2xl object-cover"
-          priority
-        />
-      </div>
+      {sceneImg && (
+        <div className="mb-4">
+          <Image
+            src={sceneImg}
+            alt={`scene ${questionIndex}`}
+            width={640}
+            height={360}
+            className="w-full rounded-2xl object-cover"
+            priority
+          />
+        </div>
+      )}
 
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 mb-5">
         <p className="text-sm text-gray-500 font-medium mb-2 uppercase tracking-wide">
