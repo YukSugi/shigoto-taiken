@@ -84,9 +84,6 @@ export default function FeedbackCard({
         <div className="bg-white/70 rounded-xl px-4 py-3 mb-4">
           <p className="text-xs text-gray-500 mb-1">あなたの選択</p>
           <p className="text-sm text-gray-800 font-medium">
-            <span className="text-indigo-500 font-bold mr-1">
-              {selectedOption.id}.
-            </span>
             {selectedOption.text}
           </p>
         </div>

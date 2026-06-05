@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import Image from "next/image";
 import type { Option, Question } from "@/data/jobs/types";
 import type { Gender } from "./JobModal";
@@ -7,6 +8,7 @@ import OptionButton from "./OptionButton";
 
 // scene_5_maleが未作成のためfemaleにfallback
 const MISSING_MALE_SCENES = [5];
+const LABELS = ["ア", "イ", "ウ", "エ"];
 
 type Props = {
   question: Question;
@@ -30,6 +32,12 @@ export default function QuestionCard({
       ? "female"
       : gender;
   const sceneImg = `/images/empsales_scene_${questionIndex}_${effectiveGender}.png`;
+
+  // 問題が変わるたびに1回だけシャッフル
+  const shuffledOptions = useMemo(
+    () => [...question.options].sort(() => Math.random() - 0.5),
+    [question.id] // eslint-disable-line react-hooks/exhaustive-deps
+  );
 
   return (
     <div className="max-w-2xl mx-auto w-full px-4 py-6">
@@ -61,10 +69,11 @@ export default function QuestionCard({
           {playerName}さん、{question.question}
         </p>
         <div className="space-y-3">
-          {question.options.map((option) => (
+          {shuffledOptions.map((option, index) => (
             <OptionButton
               key={option.id}
               option={option}
+              label={LABELS[index]}
               onClick={onSelect}
               disabled={disabled}
             />
