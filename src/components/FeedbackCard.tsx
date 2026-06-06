@@ -17,36 +17,41 @@ type Props = {
 
 const feedbackConfig: Record<
   FeedbackType,
-  { label: string; bgColor: string; textColor: string; icon: string }
+  { label: string; card: string; text: string; badge: string; icon: string }
 > = {
   good: {
     label: "良い判断です",
-    bgColor: "bg-green-50 border-green-200",
-    textColor: "text-green-700",
+    card: "bg-green-50 border-green-200",
+    text: "text-green-700",
+    badge: "bg-green-500",
     icon: "✓",
   },
   strong_normal: {
     label: "かなり良い判断です",
-    bgColor: "bg-blue-50 border-blue-200",
-    textColor: "text-blue-700",
+    card: "bg-blue-50 border-blue-200",
+    text: "text-blue-700",
+    badge: "bg-blue-500",
     icon: "◎",
   },
   normal: {
     label: "まずまずの判断です",
-    bgColor: "bg-yellow-50 border-yellow-200",
-    textColor: "text-yellow-700",
+    card: "bg-yellow-50 border-yellow-200",
+    text: "text-yellow-700",
+    badge: "bg-yellow-500",
     icon: "△",
   },
   risky_bad: {
     label: "危険な判断です",
-    bgColor: "bg-orange-50 border-orange-200",
-    textColor: "text-orange-700",
+    card: "bg-orange-50 border-orange-200",
+    text: "text-orange-700",
+    badge: "bg-orange-500",
     icon: "⚠",
   },
   bad: {
     label: "注意が必要です",
-    bgColor: "bg-red-50 border-red-200",
-    textColor: "text-red-700",
+    card: "bg-red-50 border-red-200",
+    text: "text-red-700",
+    badge: "bg-red-500",
     icon: "!",
   },
 };
@@ -71,31 +76,31 @@ export default function FeedbackCard({
   return (
     <div className="max-w-2xl mx-auto w-full px-4 py-6 animate-fade-in">
       {/* フィードバック画像 */}
-      <div className="mb-4">
+      <div className="mb-5">
         <Image
           src={feedbackImg}
           alt={`feedback ${feedbackType}`}
           width={640}
           height={360}
-          className="w-full rounded-2xl object-cover"
+          className="w-full rounded-2xl object-cover ring-1 ring-black/5 shadow-md"
         />
       </div>
 
-      <div className={`rounded-2xl border-2 p-5 mb-5 ${config.bgColor}`}>
-        <div className="flex items-center gap-2 mb-3">
+      <div className={`rounded-2xl border-2 p-5 mb-6 shadow-sm ${config.card}`}>
+        <div className="flex items-center gap-2.5 mb-3">
           <span
-            className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-sm border-2 ${config.bgColor} ${config.textColor} border-current`}
+            className={`grid place-items-center w-9 h-9 rounded-full text-white font-extrabold text-base shadow ${config.badge} animate-pop-in`}
           >
             {config.icon}
           </span>
-          <span className={`font-bold text-base ${config.textColor}`}>
+          <span className={`font-extrabold text-lg ${config.text}`}>
             {config.label}
           </span>
         </div>
 
-        <div className="bg-white/70 rounded-xl px-4 py-3 mb-4">
-          <p className="text-xs text-gray-500 mb-1">あなたの選択</p>
-          <p className="text-sm text-gray-800 font-medium">
+        <div className="bg-white/80 rounded-xl px-4 py-3 mb-4 border border-white">
+          <p className="text-xs text-gray-400 font-bold mb-1">あなたの選択</p>
+          <p className="text-sm text-gray-800 font-bold">
             {selectedOption.text}
           </p>
         </div>
@@ -105,11 +110,8 @@ export default function FeedbackCard({
         </p>
       </div>
 
-      <button
-        onClick={onNext}
-        className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-4 rounded-xl text-base transition-colors"
-      >
-        {isLast ? "結果を見る" : "次へ"}
+      <button onClick={onNext} className="btn-pop w-full py-4 text-base">
+        {isLast ? "結果を見る 🏁" : "次へ ▶"}
       </button>
     </div>
   );

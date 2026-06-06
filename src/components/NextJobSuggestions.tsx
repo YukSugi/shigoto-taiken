@@ -32,35 +32,49 @@ export default function NextJobSuggestions({
   if (available.length === 0) return null;
 
   return (
-    <div className="mb-4">
-      <p className="text-sm text-gray-500 mb-3">次に体験してみよう</p>
-      <div className="space-y-2">
-        {available.map(({ job, reason }) => (
-          <button
-            key={job.id}
-            onClick={() => onSelect(job.id)}
-            disabled={job.status !== "published"}
-            className={`w-full text-left flex items-center gap-3 bg-white border-2 rounded-xl px-4 py-3 transition-all ${
-              job.status === "published"
-                ? "border-indigo-200 hover:border-indigo-400 hover:bg-indigo-50"
-                : "border-gray-100 opacity-60 cursor-default"
-            }`}
-          >
-            <span className="text-2xl">{iconMap[job.icon] ?? "🏢"}</span>
-            <div className="flex-1 min-w-0">
-              <p className="font-semibold text-sm text-gray-900">
-                {job.displayName}
-              </p>
-              <p className="text-xs text-gray-500 truncate">{reason}</p>
-            </div>
-            {job.status === "comingSoon" && (
-              <span className="text-xs text-gray-400 shrink-0">準備中</span>
-            )}
-            {job.status === "published" && (
-              <span className="text-xs text-indigo-500 shrink-0">→</span>
-            )}
-          </button>
-        ))}
+    <div>
+      <p className="text-sm font-extrabold text-gray-700 mb-3">
+        🧭 次に体験してみよう
+      </p>
+      <div className="space-y-2.5">
+        {available.map(({ job, reason }) => {
+          const published = job.status === "published";
+          return (
+            <button
+              key={job.id}
+              onClick={() => onSelect(job.id)}
+              disabled={!published}
+              className={`group w-full text-left flex items-center gap-3 bg-white border-2 rounded-2xl px-4 py-3 transition-all ${
+                published
+                  ? "border-gray-200 border-b-4 hover:border-teal-300 hover:border-b-teal-400 hover:-translate-y-0.5 shadow-sm hover:shadow"
+                  : "border-gray-100 opacity-60 cursor-default"
+              }`}
+            >
+              <span
+                className={`grid place-items-center w-10 h-10 rounded-xl text-xl shrink-0 ${
+                  published ? "bg-teal-50" : "bg-gray-100 grayscale"
+                }`}
+              >
+                {iconMap[job.icon] ?? "🏢"}
+              </span>
+              <div className="flex-1 min-w-0">
+                <p className="font-extrabold text-sm text-gray-900">
+                  {job.displayName}
+                </p>
+                <p className="text-xs text-gray-500 truncate">{reason}</p>
+              </div>
+              {published ? (
+                <span className="text-teal-500 font-extrabold shrink-0 transition-transform group-hover:translate-x-1">
+                  ▶
+                </span>
+              ) : (
+                <span className="text-xs text-gray-400 shrink-0 font-bold">
+                  準備中
+                </span>
+              )}
+            </button>
+          );
+        })}
       </div>
     </div>
   );

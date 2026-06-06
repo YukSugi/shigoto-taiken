@@ -263,15 +263,21 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       <Header />
       <HeroSection onClickCta={scrollToJobs} />
       <div ref={jobTilesSectionRef}>
         <JobTileGrid jobs={visibleJobs} onSelectJob={handleSelectJob} />
       </div>
-      <footer className="bg-amber-50 border-t border-amber-100 py-8 px-4">
+      <footer className="border-t border-amber-100/80 py-8 px-4 mt-4">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-xs text-gray-400">
+          <p className="inline-flex items-center gap-1.5 text-sm font-extrabold text-gray-700 mb-3">
+            <span className="grid place-items-center w-6 h-6 rounded-lg bg-gradient-to-br from-teal-400 to-teal-600 text-white text-xs">
+              🎮
+            </span>
+            お仕事体験.com
+          </p>
+          <p className="text-xs text-gray-400 max-w-lg mx-auto leading-relaxed">
             このサイトでは、サービス改善のために、選択肢の選択状況や解答時間などの匿名データを記録する場合があります。
           </p>
           <p className="text-xs text-gray-300 mt-2">© 2026 お仕事体験.com</p>

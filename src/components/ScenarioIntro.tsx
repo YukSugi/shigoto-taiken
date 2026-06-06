@@ -2,59 +2,97 @@
 
 import type { JobRpg } from "@/data/jobs/types";
 
+const iconMap: Record<string, string> = {
+  briefcase: "💼",
+  megaphone: "📣",
+  clipboard: "📋",
+  code: "💻",
+  chart: "📊",
+  heart: "🤝",
+};
+
 type Props = {
   job: JobRpg;
   playerName: string;
   onStart: () => void;
 };
 
+function BriefRow({
+  icon,
+  label,
+  children,
+}: {
+  icon: string;
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex gap-3">
+      <span className="grid place-items-center w-9 h-9 shrink-0 rounded-xl bg-teal-50 text-lg">
+        {icon}
+      </span>
+      <div className="flex-1 pt-0.5">
+        <p className="text-xs font-extrabold text-teal-500 mb-0.5">{label}</p>
+        <p className="text-sm text-gray-700 leading-relaxed">{children}</p>
+      </div>
+    </div>
+  );
+}
+
 export default function ScenarioIntro({ job, playerName, onStart }: Props) {
   const s = job.serviceSetting;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <div className="max-w-2xl mx-auto w-full px-4 py-10 flex flex-col flex-1">
-        <div className="mb-6">
-          <p className="text-sm text-indigo-600 font-semibold mb-1">
+        <div className="text-center mb-6 animate-fade-up">
+          <span className="inline-flex items-center gap-2 text-sm font-extrabold text-teal-600 bg-white border border-teal-100 rounded-full px-4 py-1.5 shadow-sm mb-3">
+            <span className="text-base">{iconMap[job.icon] ?? "🏢"}</span>
             {job.displayName}
-          </p>
-          <h1 className="text-2xl font-bold text-gray-900">今回のミッション</h1>
+          </span>
+          <h1 className="text-2xl font-extrabold text-gray-900">
+            今回のミッション
+          </h1>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6 space-y-4 text-sm text-gray-700 leading-relaxed flex-1">
+        <div className="card-soft p-6 mb-6 animate-fade-in">
           {s ? (
-            <>
-              <p>
-                あなたは、業務改善クラウド「{s.serviceName}」を販売する会社の{job.displayName}です。
-              </p>
-              <p>
+            <div className="space-y-5">
+              <BriefRow icon="🧑‍💼" label="あなたの役割">
+                あなたは、業務改善クラウド「{s.serviceName}
+                」を販売する会社の{job.displayName}です。
+              </BriefRow>
+              <BriefRow icon="☁️" label="扱うサービス">
                 {s.serviceName}は、{s.serviceDescription}
-              </p>
-              <p>
+              </BriefRow>
+              <BriefRow icon="🏢" label="担当する顧客">
                 今回あなたが担当するのは、{s.customerDescription}
-              </p>
-              <p>{s.currentProblem}</p>
-              <div className="bg-indigo-50 rounded-xl p-4">
-                <p className="font-semibold text-indigo-800 mb-1">
-                  あなたのミッション
+              </BriefRow>
+              <BriefRow icon="⚠️" label="現状の課題">
+                {s.currentProblem}
+              </BriefRow>
+
+              <div className="rounded-2xl bg-gradient-to-br from-teal-400 to-teal-600 p-5 text-white shadow-md">
+                <p className="flex items-center gap-2 font-extrabold mb-1.5">
+                  <span>🎯</span>あなたのミッション
                 </p>
-                <p className="text-indigo-700">{s.mission}</p>
+                <p className="text-teal-50 leading-relaxed text-sm">
+                  {s.mission}
+                </p>
               </div>
-            </>
+            </div>
           ) : (
             <p className="text-gray-500">シナリオ情報がありません。</p>
           )}
         </div>
 
-        <div className="text-sm text-gray-400 text-center mb-4">
-          {playerName}さんとして体験します
+        <div className="text-sm text-gray-500 text-center mb-4">
+          <span className="font-bold text-gray-700">{playerName}</span>
+          さんとして体験します
         </div>
 
-        <button
-          onClick={onStart}
-          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-4 rounded-xl text-base transition-colors"
-        >
-          仕事を始める
+        <button onClick={onStart} className="btn-pop w-full py-4 text-base">
+          仕事を始める ▶
         </button>
       </div>
     </div>
