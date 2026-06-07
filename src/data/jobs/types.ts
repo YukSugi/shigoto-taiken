@@ -57,6 +57,12 @@ export type NextJobSuggestion = {
   reason: string;
 };
 
+// serviceSetting の定型文に乗らない職種向けの自由記述ミッション
+export type ScenarioBriefing = {
+  paragraphs: string[];
+  mission: string;
+};
+
 export type JobRpg = {
   id: string;
   version: string;
@@ -68,6 +74,7 @@ export type JobRpg = {
   estimatedMinutes: number;
   targetUser?: string;
   serviceSetting?: ServiceSetting;
+  scenarioBriefing?: ScenarioBriefing;
   scoring: ScoringRule;
   questions: Question[];
   resultMessages: ResultMessage[];

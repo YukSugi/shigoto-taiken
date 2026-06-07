@@ -41,6 +41,7 @@ function BriefRow({
 
 export default function ScenarioIntro({ job, playerName, onStart }: Props) {
   const s = job.serviceSetting;
+  const b = job.scenarioBriefing;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -78,6 +79,23 @@ export default function ScenarioIntro({ job, playerName, onStart }: Props) {
                 </p>
                 <p className="text-teal-50 leading-relaxed text-sm">
                   {s.mission}
+                </p>
+              </div>
+            </div>
+          ) : b ? (
+            <div className="space-y-4">
+              {b.paragraphs.map((p, i) => (
+                <p key={i} className="text-sm text-gray-700 leading-relaxed">
+                  {p}
+                </p>
+              ))}
+
+              <div className="rounded-2xl bg-gradient-to-br from-teal-400 to-teal-600 p-5 text-white shadow-md">
+                <p className="flex items-center gap-2 font-extrabold mb-1.5">
+                  <span>🎯</span>あなたのミッション
+                </p>
+                <p className="text-teal-50 leading-relaxed text-sm">
+                  {b.mission}
                 </p>
               </div>
             </div>
