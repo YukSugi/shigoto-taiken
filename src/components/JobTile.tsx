@@ -9,6 +9,9 @@ const iconMap: Record<string, string> = {
   code: "💻",
   chart: "📊",
   heart: "🤝",
+  calculator: "🧮",
+  helmet: "👷",
+  factory: "🏭",
 };
 
 // アイコンの色に合わせたカラーテーマ
@@ -63,6 +66,30 @@ const colorTheme: Record<
     chip: "bg-pink-100 text-pink-700",
     badge: "bg-pink-100 text-pink-800",
     arrow: "text-pink-500",
+  },
+  calculator: {
+    // 🧮 経理のエメラルド
+    button:
+      "border-emerald-200 border-b-emerald-400 hover:border-emerald-300 hover:border-b-emerald-500",
+    chip: "bg-emerald-100 text-emerald-700",
+    badge: "bg-emerald-100 text-emerald-800",
+    arrow: "text-emerald-500",
+  },
+  helmet: {
+    // 👷 施工管理のアンバー
+    button:
+      "border-amber-200 border-b-amber-400 hover:border-amber-300 hover:border-b-amber-500",
+    chip: "bg-amber-100 text-amber-700",
+    badge: "bg-amber-100 text-amber-800",
+    arrow: "text-amber-500",
+  },
+  factory: {
+    // 🏭 生産管理のシアン
+    button:
+      "border-cyan-200 border-b-cyan-400 hover:border-cyan-300 hover:border-b-cyan-500",
+    chip: "bg-cyan-100 text-cyan-700",
+    badge: "bg-cyan-100 text-cyan-800",
+    arrow: "text-cyan-500",
   },
 };
 

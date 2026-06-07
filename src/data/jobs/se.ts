@@ -1,12 +1,12 @@
 import type { JobRpg } from "./types";
 
-export const customerSuccess: JobRpg = {
-  id: "customer-success",
+export const se: JobRpg = {
+  id: "se",
   version: "1.0.0",
-  displayName: "カスタマーサクセス",
-  subtitle: "顧客の成果に伴走する仕事",
-  description: "顧客がサービスで成果を出せるよう、継続的に支援する仕事です。",
-  icon: "heart",
+  displayName: "SE",
+  subtitle: "システムを設計・開発する仕事",
+  description: "要件を整理し、システムを設計・開発する仕事です。",
+  icon: "code",
   status: "comingSoon",
   estimatedMinutes: 7,
   targetUser: "高校生・大学生",

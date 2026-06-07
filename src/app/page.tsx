@@ -8,7 +8,7 @@ import JobModal from "@/components/JobModal";
 import ScenarioIntro from "@/components/ScenarioIntro";
 import GameLayout from "@/components/GameLayout";
 import ResultScreen from "@/components/ResultScreen";
-import { getVisibleJobs } from "@/data/jobs";
+import { getVisibleJobs, getVisibleJobGroups } from "@/data/jobs";
 import type { JobRpg, Option } from "@/data/jobs/types";
 import type { PlayerAnswer } from "@/lib/scoring";
 import type { Gender } from "@/components/JobModal";
@@ -21,6 +21,7 @@ import {
 type Screen = "home" | "intro" | "question" | "feedback" | "result";
 
 const visibleJobs = getVisibleJobs();
+const visibleJobGroups = getVisibleJobGroups();
 
 export default function Home() {
   const [screen, setScreen] = useState<Screen>("home");
@@ -267,7 +268,7 @@ export default function Home() {
       <Header />
       <HeroSection onClickCta={scrollToJobs} />
       <div ref={jobTilesSectionRef}>
-        <JobTileGrid jobs={visibleJobs} onSelectJob={handleSelectJob} />
+        <JobTileGrid groups={visibleJobGroups} onSelectJob={handleSelectJob} />
       </div>
       <footer className="border-t border-amber-100/80 py-8 px-4 mt-4">
         <div className="max-w-4xl mx-auto text-center">

@@ -507,8 +507,8 @@ export const b2bSalesExisting: JobRpg = {
   ],
   nextJobSuggestions: [
     {
-      jobId: "customer-success",
-      reason: "契約後の顧客支援に近い仕事です",
+      jobId: "marketer",
+      reason: "顧客に選ばれる理由を作るマーケティングも体験できます",
     },
     {
       jobId: "product-manager",

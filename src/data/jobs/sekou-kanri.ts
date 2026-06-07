@@ -1,12 +1,12 @@
 import type { JobRpg } from "./types";
 
-export const engineer: JobRpg = {
-  id: "engineer",
+export const sekouKanri: JobRpg = {
+  id: "sekou-kanri",
   version: "1.0.0",
-  displayName: "エンジニア",
-  subtitle: "サービスを実装する仕事",
-  description: "技術的な判断をしながら、サービスを作り上げる仕事です。",
-  icon: "code",
+  displayName: "施工管理",
+  subtitle: "建設現場を動かす仕事",
+  description: "工程・品質・安全を管理し、建物を作り上げる仕事です。",
+  icon: "helmet",
   status: "comingSoon",
   estimatedMinutes: 7,
   targetUser: "高校生・大学生",

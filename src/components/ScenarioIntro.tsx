@@ -9,6 +9,9 @@ const iconMap: Record<string, string> = {
   code: "💻",
   chart: "📊",
   heart: "🤝",
+  calculator: "🧮",
+  helmet: "👷",
+  factory: "🏭",
 };
 
 type Props = {
