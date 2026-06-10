@@ -6,8 +6,6 @@ import type { Option, Question } from "@/data/jobs/types";
 import type { Gender } from "./JobModal";
 import OptionButton from "./OptionButton";
 
-// scene_5_maleが未作成のためfemaleにfallback
-const MISSING_MALE_SCENES = [5];
 const LABELS = ["ア", "イ", "ウ", "エ"];
 
 type Props = {
@@ -29,10 +27,7 @@ export default function QuestionCard({
   disabled,
   sceneImagePrefix,
 }: Props) {
-  const effectiveGender =
-    gender === "male" && MISSING_MALE_SCENES.includes(questionIndex)
-      ? "female"
-      : gender;
+  const effectiveGender = gender;
   const sceneImg = sceneImagePrefix
     ? `/images/${sceneImagePrefix}_scene_${questionIndex}_${effectiveGender}.png`
     : null;

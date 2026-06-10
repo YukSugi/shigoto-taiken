@@ -4,9 +4,6 @@ import Image from "next/image";
 import type { FeedbackType, Option } from "@/data/jobs/types";
 import type { Gender } from "./JobModal";
 
-// feedback_normal_maleが未作成のためfemaleにfallback
-const MISSING_MALE_FEEDBACKS: FeedbackType[] = ["normal"];
-
 type Props = {
   selectedOption: Option;
   currentIndex: number;
@@ -67,11 +64,7 @@ export default function FeedbackCard({
   const isLast = currentIndex >= totalQuestions;
 
   const feedbackType = selectedOption.feedbackType;
-  const effectiveGender =
-    gender === "male" && MISSING_MALE_FEEDBACKS.includes(feedbackType)
-      ? "female"
-      : gender;
-  const feedbackImg = `/images/feedback_${feedbackType}_${effectiveGender}.png`;
+  const feedbackImg = `/images/feedback_${feedbackType}_${gender}.png`;
 
   return (
     <div className="max-w-2xl mx-auto w-full px-4 py-6 animate-fade-in">
