@@ -45,3 +45,7 @@ next-env.d.ts
 #   check_images/     = 生成済み・レビュー待ち
 #   public/images/    = 反映済み（本番デプロイ対象）
 # いずれもコミット対象なので除外しない。
+
+# ローカル閲覧用ミラー（origin の check_images をDLして目視確認するだけ。
+# サイトに配信しない＆コミットしないため除外）
+/public/check_images

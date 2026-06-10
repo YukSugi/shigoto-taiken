@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "images:generate": "tsx scripts/generate-images.ts",
-    "images:approve": "tsx scripts/approve-and-deploy.ts"
+    "images:approve": "tsx scripts/approve-and-deploy.ts",
+    "images:sync": "tsx scripts/sync-pending.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.106.2",

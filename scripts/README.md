@@ -23,10 +23,14 @@ OpenAI の画像モデル（`gpt-image-2`）で生成し、参考サンプルの
    （`job` に jobId を指定）。または Claude に「marketerの画像を生成して」と指示。
    CI が②設問確認→③生成→④類似度チェック→⑤`check_images/` へコミットまで実行し、
    「🖼️ レビュー待ち」Issue を作成。
-3. **③ レビュー** — `check_images/` の画像を確認。
-4. **④ 承認 & デプロイ** — Claude に「**承認**」と伝えると、Claude が
-   「Approve & deploy images」ワークフローを起動 → `check_images` を `public/images`
-   へ移動してコミット → push → Vercel が自動デプロイ。
+3. **③ レビュー（このPCで確認）** — Claudeアプリ（このPC）を開くと
+   **SessionStartフック**が `npm run images:sync` を実行し、まだこのPCに無いレビュー
+   待ち画像を `public/check_images/`（ローカル閲覧用・gitignore・サイトには配信しない）
+   へDLしてフォルダを開く。後からPCを開いても取りこぼさない。
+4. **④ 承認 & デプロイ** — `public/check_images/` を確認してOKなら Claude に「**承認**」と
+   伝える → Claude が「Approve & deploy images」ワークフローを起動 → `check_images` を
+   `public/images` へ移動してコミット → push → Vercel が自動デプロイ。
+   反映後、次回の sync でローカルの `public/check_images/` も自動で掃除される。
 
 ## セットアップ（最初の1回だけ）
 
@@ -46,6 +50,7 @@ npm run images:generate -- --list               # jobId 一覧
 npm run images:generate -- marketer             # 不足画像だけ生成
 npm run images:generate -- marketer --force     # 既存も含め全再生成
 npm run images:generate -- marketer --only feedback_good  # 名前一致だけ生成
+npm run images:sync                              # レビュー待ち画像をこのPCにDL（public/check_images）
 npm run images:approve                           # check_images → public/images へ反映＆push
 ```
 

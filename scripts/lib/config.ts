@@ -49,6 +49,10 @@ export const config = {
   checkImagesDir: path.resolve(ROOT, process.env.CHECK_IMAGES_DIR ?? "check_images"),
   // 3) 反映済み: 本番にデプロイされる公開フォルダ
   publicImagesDir: path.resolve(ROOT, process.env.OUTPUT_IMAGES_DIR ?? "public/images"),
+
+  // ローカル閲覧用ミラー（gitignore・サイトには配信しない）。
+  // PCを開いたとき check_images の中身をここにDLして目視確認する。
+  localReviewDir: path.resolve(ROOT, "public/check_images"),
 };
 
 export const GENDERS = ["male", "female"] as const;
