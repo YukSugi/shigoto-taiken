@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 画像生成パイプラインのフォルダ（GitHub運用のため追跡する）
+#   reference_images/ = 参考サンプル
+#   check_images/     = 生成済み・レビュー待ち
+#   public/images/    = 反映済み（本番デプロイ対象）
+# いずれもコミット対象なので除外しない。

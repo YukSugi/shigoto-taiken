@@ -1,0 +1,98 @@
+# 手動起動: 指定ジョブの画像を生成し、check_images（レビュー待ち）へコミットする。
+# 設問push時の通知(notify-new-questions.yml)を見て、人がこのワークフローを起動する運用。
+name: Generate job images
+
+on:
+  workflow_dispatch:
+    inputs:
+      job:
+        description: "対象 jobId（例: marketer）。複数はスペース区切り"
+        required: true
+        type: string
+      force:
+        description: "既存も含め全再生成する"
+        required: false
+        type: boolean
+        default: false
+      only:
+        description: "ファイル名にこの文字列を含む画像だけ生成（例: feedback_good）"
+        required: false
+        type: string
+        default: ""
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: images-generate
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - run: npm ci
+
+      - name: Generate images
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          ARGS="${{ inputs.job }}"
+          if [ "${{ inputs.force }}" = "true" ]; then ARGS="$ARGS --force"; fi
+          if [ -n "${{ inputs.only }}" ]; then ARGS="$ARGS --only ${{ inputs.only }}"; fi
+          echo "Running: npx tsx scripts/generate-images.ts $ARGS"
+          npx tsx scripts/generate-images.ts $ARGS
+
+      - name: Commit generated images to check_images
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add check_images
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "生成対象の差分がありませんでした。"
+          else
+            git commit -m "Generate images for ${{ inputs.job }} (review pending)"
+            git push origin HEAD
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open review issue
+        if: steps.commit.outputs.changed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let files = [];
+            try {
+              files = fs.readdirSync('check_images').filter(f => f.endsWith('.png'));
+            } catch {}
+            const body = [
+              `\`${{ inputs.job }}\` の画像を生成しました。**レビュー待ち**です。`,
+              '',
+              `生成枚数: ${files.length}`,
+              '',
+              'check_images/ の画像を確認してください。OKなら **Claudeに「承認」** と伝えると本番反映＆デプロイされます。',
+              '（GitHub上で承認する場合は Actions の「Approve & deploy images」を実行）',
+              '',
+              '<details><summary>生成ファイル</summary>',
+              '',
+              ...files.map(f => `- \`${f}\``),
+              '</details>',
+            ].join('\n');
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🖼️ レビュー待ち: ${{ inputs.job }} の画像 (${files.length}枚)`,
+              body,
+              labels: ['image-review'],
+            });

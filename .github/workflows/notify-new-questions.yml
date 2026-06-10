@@ -1,0 +1,57 @@
+# ① トリガー: 新しいお仕事体験の設問が push されたら通知用 Issue を立てる。
+# （画像生成自体はローカルで `npm run images:generate` を実行する運用）
+name: Notify new job questions
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/data/jobs/**"
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect changed job files
+        id: diff
+        run: |
+          CHANGED=$(git diff --name-only HEAD^ HEAD -- 'src/data/jobs/*.ts' \
+            | grep -vE '/(index|types)\.ts$' || true)
+          echo "changed<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$CHANGED" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Open image-generation issue
+        if: steps.diff.outputs.changed != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const changed = `${{ steps.diff.outputs.changed }}`.trim().split('\n').filter(Boolean);
+            const jobIds = changed.map(f => f.split('/').pop().replace(/\.ts$/, ''));
+            const body = [
+              '新しい/更新された設問が push されました。シーン画像・解説画像の生成が必要です。',
+              '',
+              '## 変更されたジョブ',
+              ...changed.map(f => `- \`${f}\``),
+              '',
+              '## 生成手順',
+              '- Claude に「' + jobIds.join(', ') + ' の画像を生成して」と伝える、または',
+              '- GitHub の **Actions → Generate job images** を実行（job に jobId を入力）',
+              '',
+              '生成後は check_images/ を確認し、Claude に「**承認**」と伝えると本番反映されます。',
+            ].join('\n');
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🎨 画像生成が必要: ${changed.map(f => f.split('/').pop()).join(', ')}`,
+              body,
+              labels: ['image-generation'],
+            });
