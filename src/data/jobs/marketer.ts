@@ -3,6 +3,7 @@ import type { JobRpg } from "./types";
 export const marketer: JobRpg = {
   id: "marketer",
   version: "2.0.0",
+  sceneImagePrefix: "marketer",
   displayName: "マーケター",
   subtitle: "日用品メーカーの新商品マーケティング編",
   description: "消費者の悩みを考え、商品が選ばれる理由を作る仕事です。",
